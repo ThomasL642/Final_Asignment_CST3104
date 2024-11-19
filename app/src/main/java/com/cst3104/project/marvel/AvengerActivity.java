@@ -17,6 +17,8 @@ public class AvengerActivity extends AppCompatActivity {
         // Data source
         ArrayList<Marvel> avengers = Marvel.readData(this);
 
+        Object randomElement = avengers[Math.floor(Math.random() * avengers.length())];
+
 
     }
 }
