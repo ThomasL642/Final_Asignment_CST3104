@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Final Project - Avengers Game</string>
+    <string name="random_image">Random Image</string>
 
 </resources>
