@@ -1,0 +1,173 @@
+{
+  "marvel": [
+    {
+      "nom": "Sharon Carter (Agent 13)",
+      "drawable": "agent_13",
+      "url": "https://en.wikipedia.org/wiki/Sharon_Carter"
+    },
+
+    {
+      "nom": "Phil Coulson",
+      "drawable": "agent_coulson",
+      "url": "https://en.wikipedia.org/wiki/Phil_Coulson"
+    },
+
+    {
+      "nom": "Maria Hill",
+      "drawable": "agent_maria_hill",
+      "url": "https://en.wikipedia.org/wiki/Maria_Hill"
+    },
+
+    {
+      "nom": "Ancient One",
+      "drawable": "ancient_one",
+      "url": "https://en.wikipedia.org/wiki/Ancient_One"
+    },
+
+    {
+      "nom": "Ant-Man",
+      "drawable": "ant_man",
+      "url": "https://en.wikipedia.org/wiki/Ant-Man"
+    },
+
+    {
+      "nom": "Ayesha",
+      "drawable": "ayesha",
+      "url": "https://en.wikipedia.org/wiki/Ayesha"
+    },
+
+    {
+      "nom": "Black Panther",
+      "drawable": "black_panther",
+      "url": "https://en.wikipedia.org/wiki/Black_Panther"
+    },
+
+    {
+      "nom": "Black Widow",
+      "drawable": "black_widow",
+      "url": "https://en.wikipedia.org/wiki/Black_Widow"
+    },
+
+    {
+      "nom": "Captain America",
+      "drawable": "captain_america",
+      "url": "https://en.wikipedia.org/wiki/Captain_America"
+    },
+
+    {
+      "nom": "Captain Stacy",
+      "drawable": "captain_stacy",
+      "url": "https://en.wikipedia.org/wiki/George_Stacy"
+    },
+
+    {
+      "nom": "Crossbones",
+      "drawable": "crossbones",
+      "url": "https://en.wikipedia.org/wiki/Crossbones_(comics)"
+
+    },
+
+    {
+      "nom": "Sandman",
+      "drawable": "sand_man",
+      "url": "https://en.wikipedia.org/wiki/Sandman_(Marvel_Comics)"
+    },
+
+    {
+      "nom": "Doctor Octopus",
+      "drawable": "doctor_octopus",
+      "url": "https://en.wikipedia.org/wiki/Doctor_Octopus"
+    },
+
+    {
+      "nom": "Doctor Strange",
+      "drawable": "doctor_strange",
+      "url": "https://en.wikipedia.org/wiki/Doctor_Strange"
+    },
+
+    {
+      "nom": "Drax",
+      "drawable": "drax",
+      "url": "https://en.wikipedia.org/wiki/Drax_the_Destroyer"
+    },
+
+    {
+      "nom": "Falcon (Sam Wilson)",
+      "drawable": "falcon",
+      "url": "https://en.wikipedia.org/wiki/Falcon_(comics)"
+    },
+
+    {
+      "nom": "Gamora",
+      "drawable": "gamora",
+      "url": "https://en.wikipedia.org/wiki/Gamora"
+    },
+
+    {
+      "nom": "Ghost Rider",
+      "drawable": "ghost_rider",
+      "url": "https://en.wikipedia.org/wiki/Ghost_Rider"
+    },
+
+    {
+      "nom": "Giant-Man",
+      "drawable": "giant_man",
+      "url": "https://en.wikipedia.org/wiki/Giant-Man"
+    },
+
+    {
+      "nom": "Green Goblin",
+      "drawable": "green_goblin",
+      "url": "https://en.wikipedia.org/wiki/Green_Goblin"
+    },
+
+    {
+      "nom": "Groot",
+      "drawable": "groot",
+      "url": "https://en.wikipedia.org/wiki/Groot"
+    },
+
+    {
+      "nom": "Hawkeye",
+      "drawable": "hawkeye",
+      "url": "https://en.wikipedia.org/wiki/Hawkeye_(comics)"
+    },
+
+    {
+      "nom": "Hulk",
+      "drawable": "hulk",
+      "url": "https://en.wikipedia.org/wiki/Hulk"
+    },
+
+    {
+      "nom": "Hyperion",
+      "drawable": "hyperion",
+      "url": "https://en.wikipedia.org/wiki/Hyperion_(comics)"
+    },
+
+    {
+      "nom": "Iron Man",
+      "drawable": "iron_man",
+      "url": "https://en.wikipedia.org/wiki/Iron_Man"
+    },
+
+    {
+      "nom": "Red Skull",
+      "drawable": "red_skull",
+      "url": "https://en.wikipedia.org/wiki/Red_Skull"
+    },
+
+    {
+      "nom": "Justin Hammer",
+      "drawable": "justin_hammer",
+      "url": "https://en.wikipedia.org/wiki/Justin_Hammer"
+    },
+
+    {
+      "nom": "Baron Mordo",
+      "drawable": "karl_mordo",
+      "url": "https://en.wikipedia.org/wiki/Baron_Mordo"
+    }
+
+  ]
+}
