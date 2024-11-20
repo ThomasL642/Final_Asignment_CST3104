@@ -2,6 +2,7 @@ package com.cst3104.project.marvel;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.ImageView;
 
 import org.json.JSONArray;
@@ -112,10 +113,10 @@ public class Marvel {
             for(int i = 0; i < items.length(); i++){
                 Marvel p = new Marvel();
 
-                p.name = items.getJSONObject(i).getString("name");
+
+                p.name = items.getJSONObject(i).getString("nom");
                 p.drawable = items.getJSONObject(i).getString("drawable");
                 p.url      = items.getJSONObject(i).getString("url");
-
                 mylist.add(p);
             }
         } catch (JSONException e) {
