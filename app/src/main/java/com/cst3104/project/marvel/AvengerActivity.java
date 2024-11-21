@@ -14,6 +14,8 @@
 
 package com.cst3104.project.marvel;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -58,6 +60,7 @@ public class AvengerActivity extends AppCompatActivity {
 
         // Get toolbar
         toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         // Data source
         avengers = Marvel.readData(this);
@@ -128,6 +131,11 @@ public class AvengerActivity extends AppCompatActivity {
 
         if ( id ==  R.id.resetGame) {
             resetGame();
+        }
+        if ( id == R.id.website_image) {
+            String winningAvengerLink = WinningAvenger.getUrl();
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(winningAvengerLink));
+            startActivity(browserIntent);
         }
 
         return super.onOptionsItemSelected(item);
