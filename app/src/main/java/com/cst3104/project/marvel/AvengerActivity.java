@@ -147,11 +147,10 @@ public class AvengerActivity extends AppCompatActivity {
         // Clear the existing list
         CurrentAvengers.clear();
 
-        // Add the WinningAvenger to the list
-        CurrentAvengers.add(WinningAvenger);
+
 
         // Fill up the list to the desired number of choices
-        while (CurrentAvengers.size() < numberOfChoices) {
+        while (CurrentAvengers.size() < numberOfChoices-1) {
             Marvel randomAvenger = getRandomMarvel();
 
             // Check for duplicates
@@ -160,6 +159,11 @@ public class AvengerActivity extends AppCompatActivity {
             }
         }
 
+        // Add the WinningAvenger to the list
+        Random randomInserts = new Random();
+        int randomIndexInserts = randomInserts.nextInt(numberOfChoices);
+        CurrentAvengers.add(randomIndexInserts, WinningAvenger);
+
         // Notify the adapter to refresh the list view
         adapter.notifyDataSetChanged();
     }
@@ -167,8 +171,8 @@ public class AvengerActivity extends AppCompatActivity {
     //Make a list of avengers for the player to chose from
     private ArrayList<Marvel> getAvengerChoices() {
         ArrayList<Marvel> newAvengers = new ArrayList<>();
-        newAvengers.add(WinningAvenger);
-        while (newAvengers.size() < (numberOfChoices)) {
+        //newAvengers.add(WinningAvenger);
+        while (newAvengers.size() < (numberOfChoices-1)) {
             Marvel randomAvenger = getRandomMarvel();
 
             // Check for duplicates
@@ -176,6 +180,9 @@ public class AvengerActivity extends AppCompatActivity {
                 newAvengers.add(randomAvenger);
             }
         }
+        Random randomInsert = new Random();
+        int randomIndexInsert = randomInsert.nextInt(numberOfChoices);
+        newAvengers.add(randomIndexInsert, WinningAvenger);
         return newAvengers;
     }
 
