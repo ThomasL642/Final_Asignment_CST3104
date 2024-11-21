@@ -6,5 +6,7 @@
     <string name="reset_game">Reset</string>
     <string name="empty"></string>
     <string name="game_scorebroad">Game Scorebroad</string>
+    <string name="infoTitleAdmin">Info</string>
+    <string name="infoAdmin">This is the admin screen</string>
 
 </resources>

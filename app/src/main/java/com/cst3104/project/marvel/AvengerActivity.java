@@ -122,7 +122,7 @@ public class AvengerActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    // Script for overflow menu
+    // Script for toolbar menu
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
