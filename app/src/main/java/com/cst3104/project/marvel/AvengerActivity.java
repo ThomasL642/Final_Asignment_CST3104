@@ -17,11 +17,9 @@ package com.cst3104.project.marvel;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -146,7 +144,7 @@ public class AvengerActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.overflow_menu, menu);
+        inflater.inflate(R.menu.avengers_activity_toolbar, menu);
         return true;
     }
 
