@@ -49,7 +49,6 @@ import java.util.ArrayList;
             TextView choiceView = convertView.findViewById(R.id.choicesView);
 
             // Set the name of the Avenger in the TextView
-            //Log.d("AvengerName", avenger.getName());
             choiceView.setText(avenger.toString());
             choiceView.setVisibility(View.VISIBLE);
 

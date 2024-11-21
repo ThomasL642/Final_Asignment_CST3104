@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Final Project - Avengers Game</string>
     <string name="random_image">Random Image</string>
+    <string name="toolbar_title">Final Project - Avengers Game</string>
+    <string name="toolbar_subtitle" />
+    <string name="reset_game">Reset</string>
+    <string name="empty"></string>
 
 </resources>
