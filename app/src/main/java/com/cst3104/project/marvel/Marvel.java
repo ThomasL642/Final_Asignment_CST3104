@@ -1,3 +1,16 @@
+/**
+ * Full Name: Starter Code
+ *
+ * Student ID: CST3104
+ *
+ * Course: CST3104
+ *
+ * Term: Fall 2024
+ *
+ * Assignment: Team Project
+ *
+ * Date : November 24 2024
+ */
 package com.cst3104.project.marvel;
 
 import android.content.Context;
