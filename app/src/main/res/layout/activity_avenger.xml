@@ -40,6 +40,7 @@
         app:layout_constraintTop_toTopOf="parent"
         style="@style/Widget.MaterialComponents.Toolbar.Primary"/>
 
+
     <TextView
         android:id="@+id/counterView"
         android:layout_width="101dp"
