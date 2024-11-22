@@ -40,13 +40,14 @@ public class LoginActivity extends AppCompatActivity {
             if (username.isEmpty() || username.length() < 3) {
                 Toast.makeText(LoginActivity.this, "Username must be at least 3 characters long", Toast.LENGTH_SHORT).show();
             } else if (username.equalsIgnoreCase("admin")) {
-                // Navigate to the Scoreboard screen
-                Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                // Navigate to the GameScoreboard screen
+                Intent intent = new Intent(LoginActivity.this, GameScorebroad.class);
                 startActivity(intent);
                 finish();
             } else {
-                // Navigate to the Dashboard screen
+                // Navigate to the Dashboard screen and pass username
                 Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                intent.putExtra("username", username); // Pass username to Dashboard
                 startActivity(intent);
                 finish();
             }
