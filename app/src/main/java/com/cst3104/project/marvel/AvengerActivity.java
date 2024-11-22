@@ -32,11 +32,14 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.cst3104.project.R;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * The AvengerActivity class is the main activity for the Avengers game.
@@ -90,11 +93,35 @@ public class AvengerActivity extends AppCompatActivity {
      */
     private ChoicesAdapter adapter;
 
+    /**
+     * Database for storing and retrieving user scores.
+     */
+    private ScoreDatabase db;
+
+    /**
+     * Data access object (DAO) for interacting with the ScoreDatabase.
+     */
+    private ScoreDAO mDAO;
+
+    /**
+     * String representing the users name
+     */
+    private String userName = "Kendrick Lamar";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_avenger);
+
+        // Initialize the database and its DAO
+        db = Room.databaseBuilder(
+                getApplicationContext(),
+                ScoreDatabase.class,
+                getString(R.string.databaseName)
+        ).build();
+        mDAO = db.scoreDAO();
+
 
         // Initialize ViewModel
         viewModel = new ViewModelProvider(this).get(GameViewModel.class);
@@ -130,6 +157,12 @@ public class AvengerActivity extends AppCompatActivity {
                     counterView.setBackgroundColor(ContextCompat.getColor(this, R.color.correct_Green));
                     viewModel.rightAnswerChosen = true;
                     winningAvengerName.setText(viewModel.WinningAvenger.toString());
+                    //add score, user name, and time played to database
+                    Executor thread = Executors.newSingleThreadExecutor();
+                    thread.execute(() -> {
+                        UserInfo currentPlayer = new UserInfo(viewModel.counter, userName);
+                        mDAO.insertUserInfo(currentPlayer);
+                    });
                 } else {
                     viewModel.counter++;
                     counterView.setText(String.valueOf(viewModel.counter));
