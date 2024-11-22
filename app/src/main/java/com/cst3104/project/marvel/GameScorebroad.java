@@ -9,22 +9,18 @@
  *
  * Assignment: Team Project
  *
- * Date : November 24 2024
+ * Date: November 24 2024
  */
 
 package com.cst3104.project.marvel;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -33,69 +29,100 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.room.Room;
 
 import com.cst3104.project.R;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+/**
+ * The GameScorebroad activity displays a leaderboard of user scores fetched from a Room database.
+ */
 public class GameScorebroad extends AppCompatActivity {
+
+    /**
+     * Toolbar for app navigation and menu.
+     */
     private Toolbar toolbar;
+
+    /**
+     * Database for storing and retrieving user scores.
+     */
     private ScoreDatabase db;
+
+    /**
+     * Data access object (DAO) for interacting with the ScoreDatabase.
+     */
     private ScoreDAO mDAO;
+
+    /**
+     * List of UserInfo objects representing user scores.
+     */
     private ArrayList<UserInfo> UsersInfo;
+
+    /**
+     * ListView for displaying the scores.
+     */
     private ListView scorebroadListView;
+
+    /**
+     * Adapter for managing and displaying UserInfo data in the ListView.
+     */
     private UserInfoAdapter userAdapter;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_scorebroad);
 
+        // Initialize the list of user scores
         UsersInfo = new ArrayList<>();
 
-        // Get toolbar
+        // Set up the toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getString(R.string.toolbar_title));
 
+        // Set up the ListView and its adapter
         scorebroadListView = findViewById(R.id.scorebroadList);
         userAdapter = new UserInfoAdapter(this, UsersInfo);
         scorebroadListView.setAdapter(userAdapter);
 
-        // Initialize the database
-        db = Room.databaseBuilder(getApplicationContext(),
-                ScoreDatabase.class, getString(R.string.databaseName)).build();
+        // Initialize the database and its DAO
+        db = Room.databaseBuilder(
+                getApplicationContext(),
+                ScoreDatabase.class,
+                getString(R.string.databaseName)
+        ).build();
         mDAO = db.scoreDAO();
 
+        // Load scores from the database
         loadScoresFromDatabase();
-
     }
 
-    // Script for info menu
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if ( id ==  R.id.info_icon) {
+        // Show an info alert if the info menu item is clicked
+        if (id == R.id.info_icon) {
             showInfoAlert();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    // gets toolbar layout
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
+        // Inflate the menu items for the toolbar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.game_scorebroad_toolbar, menu);
         return true;
     }
 
+    /**
+     * Displays an informational alert dialog about the GameScorebroad activity.
+     */
     private void showInfoAlert() {
         new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.infoTitleAdmin))
@@ -103,27 +130,30 @@ public class GameScorebroad extends AppCompatActivity {
                 .show();
     }
 
+    /**
+     * Loads scores from the database asynchronously and updates the ListView on the main thread.
+     */
     private void loadScoresFromDatabase() {
+        // Use a background thread for database operations
         Executor thread = Executors.newSingleThreadExecutor();
         thread.execute(() -> {
             try {
+                // Fetch all UserInfo records from the database
                 List<UserInfo> oldUsersInfo = mDAO.getAllUserInfo();
 
+                // Check if any records exist in the database
                 if (oldUsersInfo != null && !oldUsersInfo.isEmpty()) {
-
-                    // Clear existing userinfo to avoid duplicates
+                    // Clear the current list to prevent duplicate entries
                     UsersInfo.clear();
 
-                    // Populate messages and chatMessages lists
-                    for (UserInfo userInfo : oldUsersInfo) {
-                        UsersInfo.add(userInfo);
-                    }
+                    // Add all fetched records to the UsersInfo list
+                    UsersInfo.addAll(oldUsersInfo);
 
-                    // Update the adapter on the main thread after loading all messages
+                    // Update the adapter on the main thread to reflect changes
                     runOnUiThread(() -> userAdapter.notifyDataSetChanged());
                 }
             } catch (Exception e) {
-                // Log the exception or handle it to prevent crashing
+                // Log the exception and handle errors to prevent app crashes
                 Log.e(getString(R.string.databaseError), getString(R.string.errorMessage), e);
             }
         });
