@@ -30,24 +30,23 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.cst3104.project.R;
 import java.util.ArrayList;
 import java.util.Random;
+import androidx.lifecycle.ViewModel;
 
 public class AvengerActivity extends AppCompatActivity {
     //Declare Variables
     private Toolbar toolbar;
     private ImageView WinningAvengerView;
     private TextView counterView;
-    private ListView CurrentChoicesView;
+    private RecyclerView CurrentChoicesView;
+    private GameViewModel viewModel;
     private TextView winningAvengerName;
-    private int counter;
     private int numberOfChoices = 7;
-    private boolean rightAnswerChosen = false;
-    private Marvel WinningAvenger;
-    private ArrayList<Marvel> CurrentAvengers;
     private ArrayList<Marvel> avengers;
     private ChoicesAdapter adapter;
 
@@ -58,8 +57,9 @@ public class AvengerActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_avenger);
 
-        // Replace ListView with RecyclerView
-        RecyclerView CurrentChoicesView = findViewById(R.id.currentChoices);
+        viewModel = new ViewModelProvider(this).get(GameViewModel.class);
+
+        CurrentChoicesView = findViewById(R.id.currentChoices);
         CurrentChoicesView.setLayoutManager(new LinearLayoutManager(this));
 
         // Get toolbar
@@ -72,34 +72,28 @@ public class AvengerActivity extends AppCompatActivity {
         winningAvengerName = findViewById(R.id.winningAvengerNameView);
         //Get counter view and set it
         counterView = findViewById(R.id.counterView);
-        counterView.setText(String.valueOf(counter));
+        counterView.setText(String.valueOf(viewModel.counter));
         // Get ImageView
         WinningAvengerView = findViewById(R.id.currentAvengerView);
         CurrentChoicesView = findViewById(R.id.currentChoices);
 
-        
-        // Pick a random character and Display
-        WinningAvenger = getRandomMarvel();
-        DisplayAvenger(WinningAvenger, WinningAvengerView);
+        if (viewModel.CurrentAvengers.isEmpty()) {
+            viewModel.WinningAvenger = viewModel.getRandomMarvel(avengers);
+            viewModel.updateAvengerChoices(avengers, numberOfChoices);
+        }
 
-        //create array of avenger for listview
-        // add current avenger to listview
-        CurrentAvengers = getAvengerChoices();
+        counterView.setText(String.valueOf(viewModel.counter));
+        DisplayAvenger(viewModel.WinningAvenger, WinningAvengerView);
 
-        //Add the Choices to the list view
-        // Set the custom adapter to the ListView
-
-
-        // Set up the adapter with a click listener
-        adapter = new ChoicesAdapter(this, CurrentAvengers, position -> {
-            if (!rightAnswerChosen) {
-                if (CurrentAvengers.get(position).toString().equals(WinningAvenger.toString())) {
+        adapter = new ChoicesAdapter(this, viewModel.CurrentAvengers, position -> {
+            if (!viewModel.rightAnswerChosen) {
+                if (viewModel.CurrentAvengers.get(position).toString().equals(viewModel.WinningAvenger.toString())) {
                     counterView.setBackgroundColor(ContextCompat.getColor(this, R.color.correct_Green));
-                    rightAnswerChosen = true;
-                    winningAvengerName.setText(WinningAvenger.toString());
+                    viewModel.rightAnswerChosen = true;
+                    winningAvengerName.setText(viewModel.WinningAvenger.toString());
                 } else {
-                    counter += 1;
-                    counterView.setText(String.valueOf(counter));
+                    viewModel.counter++;
+                    counterView.setText(String.valueOf(viewModel.counter));
                     counterView.setBackgroundColor(ContextCompat.getColor(this, R.color.wrong_Red));
                 }
             }
@@ -109,19 +103,13 @@ public class AvengerActivity extends AppCompatActivity {
 
     //resets game
     private void resetGame () {
-        //reset counter
-        counter = 0;
-        counterView.setText(String.valueOf(counter));
+        viewModel.resetGame(avengers, numberOfChoices);
+
+        counterView.setText(String.valueOf(viewModel.counter));
         counterView.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-        //new Game!
-        rightAnswerChosen = false;
-        //Empty answer textview
         winningAvengerName.setText(getString(R.string.empty));
-        //pick new avenger
-        WinningAvenger = getRandomMarvel();
-        DisplayAvenger(WinningAvenger, WinningAvengerView);
-        //Get new list og avengers
-        updateAvengerChoices();
+        DisplayAvenger(viewModel.WinningAvenger, WinningAvengerView);
+
         adapter.notifyDataSetChanged();
     }
 
@@ -134,7 +122,7 @@ public class AvengerActivity extends AppCompatActivity {
             resetGame();
         }
         if ( id == R.id.website_image) {
-            String winningAvengerLink = WinningAvenger.getUrl();
+            String winningAvengerLink = viewModel.WinningAvenger.getUrl();
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(winningAvengerLink));
             startActivity(browserIntent);
         }
@@ -161,38 +149,12 @@ public class AvengerActivity extends AppCompatActivity {
                 .show();
     }
 
-    // Modify the existing array instead of creating a new one
-    private void updateAvengerChoices() {
-        // Clear the existing list
-        CurrentAvengers.clear();
-
-
-
-        // Fill up the list to the desired number of choices
-        while (CurrentAvengers.size() < numberOfChoices-1) {
-            Marvel randomAvenger = getRandomMarvel();
-
-            // Check for duplicates
-            if (!CurrentAvengers.contains(randomAvenger)) {
-                CurrentAvengers.add(randomAvenger);
-            }
-        }
-
-        // Add the WinningAvenger to the list
-        Random randomInserts = new Random();
-        int randomIndexInserts = randomInserts.nextInt(numberOfChoices);
-        CurrentAvengers.add(randomIndexInserts, WinningAvenger);
-
-        // Notify the adapter to refresh the list view
-        adapter.notifyDataSetChanged();
-    }
 
     //Make a list of avengers for the player to chose from
     private ArrayList<Marvel> getAvengerChoices() {
         ArrayList<Marvel> newAvengers = new ArrayList<>();
-        //newAvengers.add(WinningAvenger);
         while (newAvengers.size() < (numberOfChoices-1)) {
-            Marvel randomAvenger = getRandomMarvel();
+            Marvel randomAvenger = viewModel.getRandomMarvel(avengers);
 
             // Check for duplicates
             if (!newAvengers.contains(randomAvenger)) {
@@ -201,15 +163,8 @@ public class AvengerActivity extends AppCompatActivity {
         }
         Random randomInsert = new Random();
         int randomIndexInsert = randomInsert.nextInt(numberOfChoices);
-        newAvengers.add(randomIndexInsert, WinningAvenger);
+        newAvengers.add(randomIndexInsert, viewModel.WinningAvenger);
         return newAvengers;
-    }
-
-    // Method to get a random Marvel character and display it
-    private Marvel getRandomMarvel() {
-        Random random = new Random();
-        int randomIndex = random.nextInt(avengers.size());
-        return avengers.get(randomIndex);
     }
 
     private void DisplayAvenger(Marvel avenger, ImageView avengersImgView) {

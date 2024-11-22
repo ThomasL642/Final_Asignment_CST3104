@@ -21,7 +21,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/currentChoices"
         android:layout_width="0dp"
-        android:layout_height="455dp"
+        android:layout_height="wrap_content"
         android:background="#29000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

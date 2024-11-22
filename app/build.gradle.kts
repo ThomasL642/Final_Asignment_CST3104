@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.recyclerview)
     implementation(libs.room.common)
     implementation(libs.room.runtime)
+    implementation(libs.lifecycle.viewmodel)
     releaseImplementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
     testImplementation(libs.junit)
