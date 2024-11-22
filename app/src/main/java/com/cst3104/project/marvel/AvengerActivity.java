@@ -30,7 +30,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.cst3104.project.R;
 import java.util.ArrayList;
 import java.util.Random;
@@ -56,6 +57,10 @@ public class AvengerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_avenger);
+
+        // Replace ListView with RecyclerView
+        RecyclerView CurrentChoicesView = findViewById(R.id.currentChoices);
+        CurrentChoicesView.setLayoutManager(new LinearLayoutManager(this));
 
         // Get toolbar
         toolbar = findViewById(R.id.toolbar);
@@ -83,26 +88,23 @@ public class AvengerActivity extends AppCompatActivity {
 
         //Add the Choices to the list view
         // Set the custom adapter to the ListView
-        adapter = new ChoicesAdapter(this, CurrentAvengers);
-        CurrentChoicesView.setAdapter(adapter);
 
-        CurrentChoicesView.setOnItemClickListener((parent, view, position, id) -> {
-            //get avenger name and check
-            //if its right
+
+        // Set up the adapter with a click listener
+        adapter = new ChoicesAdapter(this, CurrentAvengers, position -> {
             if (!rightAnswerChosen) {
                 if (CurrentAvengers.get(position).toString().equals(WinningAvenger.toString())) {
                     counterView.setBackgroundColor(ContextCompat.getColor(this, R.color.correct_Green));
                     rightAnswerChosen = true;
                     winningAvengerName.setText(WinningAvenger.toString());
-                }
-                //else (wrong avenger)
-                else {
+                } else {
                     counter += 1;
                     counterView.setText(String.valueOf(counter));
                     counterView.setBackgroundColor(ContextCompat.getColor(this, R.color.wrong_Red));
                 }
             }
         });
+        CurrentChoicesView.setAdapter(adapter);
     }
 
     //resets game

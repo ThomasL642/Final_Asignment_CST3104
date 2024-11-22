@@ -13,60 +13,72 @@
  */
 
 package com.cst3104.project.marvel;
+
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cst3104.project.R;
 
 import java.util.ArrayList;
 
-    public class ChoicesAdapter extends BaseAdapter {
-        private Context context;
-        private ArrayList<Marvel> avengers;
+public class ChoicesAdapter extends RecyclerView.Adapter<ChoicesAdapter.ChoicesViewHolder> {
+    private Context context;
+    private ArrayList<Marvel> avengers;
+    private OnItemClickListener listener;
 
-        public ChoicesAdapter(Context context, ArrayList<Marvel> avengers) {
-            this.context = context;
-            this.avengers = avengers;
-        }
-
-        @Override
-        public int getCount() {
-            return avengers.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return avengers.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.choices_layout, parent, false);
-            }
-
-            // Get the current Marvel object
-            Marvel avenger = avengers.get(position);
-
-            // Find the TextView
-            TextView choiceView = convertView.findViewById(R.id.choicesView);
-
-            // Set the name of the Avenger in the TextView
-            choiceView.setText(avenger.toString());
-            choiceView.setVisibility(View.VISIBLE);
-
-            return convertView;
-        }
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 
+    public ChoicesAdapter(Context context, ArrayList<Marvel> avengers, OnItemClickListener listener) {
+        this.context = context;
+        this.avengers = avengers;
+        this.listener = listener;
+    }
+
+    @NonNull
+    @Override
+    public ChoicesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.choices_layout, parent, false);
+        return new ChoicesViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ChoicesViewHolder holder, int position) {
+        // Get the current Marvel object
+        Marvel avenger = avengers.get(position);
+
+        // Set the name of the Avenger in the TextView
+        holder.choiceView.setText(avenger.toString());
+        holder.choiceView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public int getItemCount() {
+        return avengers.size();
+    }
+
+    class ChoicesViewHolder extends RecyclerView.ViewHolder {
+        TextView choiceView;
+
+        public ChoicesViewHolder(@NonNull View itemView) {
+            super(itemView);
+            choiceView = itemView.findViewById(R.id.choicesView);
+
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position);
+                    }
+                }
+            });
+        }
+    }
+}
