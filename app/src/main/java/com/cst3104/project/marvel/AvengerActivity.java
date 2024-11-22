@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -127,13 +128,16 @@ public class AvengerActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if ( id ==  R.id.resetGame) {
+        if ( id ==  R.id.reset_game_icon) {
             resetGame();
         }
         if ( id == R.id.website_image) {
             String winningAvengerLink = WinningAvenger.getUrl();
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(winningAvengerLink));
             startActivity(browserIntent);
+        }
+        if ( id == R.id.info_icon) {
+            showInfoAlert();
         }
 
         return super.onOptionsItemSelected(item);
@@ -146,6 +150,13 @@ public class AvengerActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.avengers_activity_toolbar, menu);
         return true;
+    }
+
+    private void showInfoAlert() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.infoTitleGame))
+                .setMessage(getString(R.string.infoGame))
+                .show();
     }
 
     // Modify the existing array instead of creating a new one
