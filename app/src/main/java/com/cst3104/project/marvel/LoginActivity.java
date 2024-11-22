@@ -16,7 +16,7 @@ import com.cst3104.project.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText emailEditText, passwordEditText;
+    private EditText emailEditText;
     private Button loginButton;
 
     @Override
@@ -30,23 +30,25 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize Views
         emailEditText = findViewById(R.id.editTextTextEmailAddress2);
-        passwordEditText = findViewById(R.id.editTextTextPassword);
         loginButton = findViewById(R.id.button);
 
         // Set Login Button Click Listener
         loginButton.setOnClickListener(v -> {
-            String email = emailEditText.getText().toString().trim();
-            String password = passwordEditText.getText().toString().trim();
+            String username = emailEditText.getText().toString().trim();
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(LoginActivity.this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
-            } else if (email.equals("admin@example.com") && password.equals("password")) {
-                // Navigate to AvengerActivity for valid credentials
-                Intent intent = new Intent(LoginActivity.this, AvengerActivity.class);
+            // Check for empty username or less than 3 characters
+            if (username.isEmpty() || username.length() < 3) {
+                Toast.makeText(LoginActivity.this, "Username must be at least 3 characters long", Toast.LENGTH_SHORT).show();
+            } else if (username.equalsIgnoreCase("admin")) {
+                // Navigate to the Scoreboard screen
+                Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                 startActivity(intent);
                 finish();
             } else {
-                Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                // Navigate to the Dashboard screen
+                Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -63,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             // Show Info Dialog
             new AlertDialog.Builder(this)
                     .setTitle("Application Info")
-                    .setMessage("This application is created for the CST3104 course. Authors: hamza habiballah and thomas lawrence.")
+                    .setMessage("This application is created for the CST3104 course. Authors: Hamza Habiballah and Thomas Lawrence.")
                     .setPositiveButton("OK", null)
                     .show();
             return true;
