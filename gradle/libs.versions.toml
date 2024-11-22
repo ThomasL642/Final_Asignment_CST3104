@@ -12,6 +12,9 @@ roomRuntime = "2.6.1"
 roomCompiler = "2.6.1"
 roomCommon = "2.6.1"
 
+=======
+lifecycleViewmodel = "2.6.1"
+
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -24,6 +27,10 @@ recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomRuntime" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
 room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
+
+=======
+lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycleViewmodel" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

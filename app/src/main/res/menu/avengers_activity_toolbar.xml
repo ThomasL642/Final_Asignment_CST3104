@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/website_image"
+        android:title=""
+        android:icon="@drawable/website"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/reset_game_icon"
+        android:title="@string/reset_game"
+        android:icon="@drawable/reset"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/info_icon"
+        android:title=""
+        android:icon="@drawable/info"
+        app:showAsAction="always" />
+</menu>
