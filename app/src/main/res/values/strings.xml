@@ -14,4 +14,22 @@
     <string name="infoTitleGame">Game Info</string>
     <string name="infoGame">How to Play:\n- Guess the name of the character shown in the image by selecting an option from the list.\n- Correct Answer: The score turns green and the game stops,\n- Wrong Answer: The score turns red and increases, so aim for the lowest score possible!\n- Use the reset icon to restart the game.\n- Tap the web icon to open the character\'s Wikipedia page for more information.</string>
 
+
+    <string name="enter_email">Enter Email</string>
+    <string name="hint_email">Email Address</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="hint_password">Password</string>
+    <string name="login_button_text">Login</string>
+
+    <string name="toolbar_title_dashboard">Final Project - Avengers Game</string>
+    <string name="dashboard_title">My Dashboard</string>
+    <string name="play_button">Play</string>
+    <string name="latest_game">Latest: %1$s - Score: %2$d</string>
+    <string name="lowest_game">Lowest: %1$s - Score: %2$d</string>
+    <string name="highest_game">Highest: %1$s - Score: %2$d</string>
+    <string name="about_app_title">About the App</string>
+    <string name="about_app_message">This app was created for CST3104.\nAuthors: %1$s and %2$s</string>
+    <string name="ok_button">OK</string>
+
+
 </resources>
