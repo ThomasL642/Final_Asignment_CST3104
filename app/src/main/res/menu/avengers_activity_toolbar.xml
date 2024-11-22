@@ -9,7 +9,14 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/resetGame"
+        android:id="@+id/reset_game_icon"
         android:title="@string/reset_game"
-        app:showAsAction="never"/>
+        android:icon="@drawable/reset"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/info_icon"
+        android:title=""
+        android:icon="@drawable/info"
+        app:showAsAction="always" />
 </menu>

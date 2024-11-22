@@ -8,5 +8,10 @@
     <string name="game_scorebroad">Game Scorebroad</string>
     <string name="infoTitleAdmin">Info</string>
     <string name="infoAdmin">This is the admin screen</string>
+    <string name="databaseName">database_name</string>
+    <string name="databaseError">database error</string>
+    <string name="errorMessage">The array is null</string>
+    <string name="infoTitleGame">Game Info</string>
+    <string name="infoGame">How to Play:\n- Guess the name of the character shown in the image by selecting an option from the list.\n- Correct Answer: The score turns green and the game stops,\n- Wrong Answer: The score turns red and increases, so aim for the lowest score possible!\n- Use the reset icon to restart the game.\n- Tap the web icon to open the character\'s Wikipedia page for more information.</string>
 
 </resources>
