@@ -106,7 +106,7 @@ public class AvengerActivity extends AppCompatActivity {
     /**
      * String representing the users name
      */
-    private String userName = "Kendrick Lamar";
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +121,8 @@ public class AvengerActivity extends AppCompatActivity {
                 getString(R.string.databaseName)
         ).build();
         mDAO = db.scoreDAO();
+
+        userName = getIntent().getStringExtra("username");
 
 
         // Initialize ViewModel
