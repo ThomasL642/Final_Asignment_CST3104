@@ -48,6 +48,10 @@ import java.util.concurrent.Executors;
  */
 public class AvengerActivity extends AppCompatActivity {
 
+    // Get the username from the Intent
+    String username = getIntent().getStringExtra("username");
+
+
     /**
      * Toolbar for displaying the app's menu.
      */
