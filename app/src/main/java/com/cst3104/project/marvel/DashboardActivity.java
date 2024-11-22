@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    private TextView latestGameTextView, lowestGameTextView, highestGameTextView, welcomeTextView;
+    private TextView latestGameTextView, lowestGameTextView, highestGameTextView;
     private Button playButton;
     private ScoreDAO mDAO;
     private ScoreDatabase db;
@@ -37,12 +37,8 @@ public class DashboardActivity extends AppCompatActivity {
         highestGameTextView = findViewById(R.id.textViewHighestGame);
         playButton = findViewById(R.id.buttonPlay);
 
-
         // Retrieve username from the Intent
         username = getIntent().getStringExtra("username");
-        if (username != null) {
-            welcomeTextView.setText("Welcome, " + username + "!");
-        }
 
         // Initialize Database
         db = Room.databaseBuilder(
@@ -59,7 +55,7 @@ public class DashboardActivity extends AppCompatActivity {
         playButton.setOnClickListener(v -> {
             Intent intent = new Intent(DashboardActivity.this, AvengerActivity.class);
             intent.putExtra("username", username); // Pass username to AvengerActivity
-            startActivity(intent);
+            startActivity(intent); // Start AvengerActivity
         });
     }
 
@@ -67,7 +63,7 @@ public class DashboardActivity extends AppCompatActivity {
         // Fetch latest game
         Executor thread = Executors.newSingleThreadExecutor();
         thread.execute(() -> {
-            UserInfo latestUserInfo = db.scoreDAO().getLatestUserInfo();
+            UserInfo latestUserInfo = mDAO.getLatestUserInfo();
             if (latestUserInfo != null) {
                 runOnUiThread(() -> latestGameTextView.setText(getString(
                         R.string.latest_game,
@@ -79,7 +75,7 @@ public class DashboardActivity extends AppCompatActivity {
             }
 
             // Fetch lowest game
-            UserInfo lowestUserInfo = db.scoreDAO().getLowestUserInfo();
+            UserInfo lowestUserInfo = mDAO.getLowestUserInfo();
             if (lowestUserInfo != null) {
                 runOnUiThread(() -> lowestGameTextView.setText(getString(
                         R.string.lowest_game,
@@ -91,7 +87,7 @@ public class DashboardActivity extends AppCompatActivity {
             }
 
             // Fetch highest game
-            UserInfo highestUserInfo = db.scoreDAO().getHighestUserInfo();
+            UserInfo highestUserInfo = mDAO.getHighestUserInfo();
             if (highestUserInfo != null) {
                 runOnUiThread(() -> highestGameTextView.setText(getString(
                         R.string.highest_game,
