@@ -12,7 +12,6 @@ roomRuntime = "2.6.1"
 roomCompiler = "2.6.1"
 roomCommon = "2.6.1"
 
-=======
 lifecycleViewmodel = "2.6.1"
 
 [libraries]
@@ -28,7 +27,6 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
 room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
 
-=======
 lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycleViewmodel" }
 
 

@@ -122,7 +122,7 @@ public class UserInfoAdapter extends BaseAdapter {
      * @return A formatted string with the username and score aligned.
      */
     private String formatScoreString(String userName, int score) {
-        int totalLength = 33; // Total length for alignment
+        int totalLength = 32; // Total length for alignment
         int spaces = totalLength - (userName.length() + String.valueOf(score).length());
         String spacesString = new String(new char[spaces]).replace("\0", " "); // Generate spaces
         return userName + spacesString + score;
