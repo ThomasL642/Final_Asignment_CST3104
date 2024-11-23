@@ -7,7 +7,7 @@
     <string name="empty"></string>
     <string name="game_scorebroad">Game Scorebroad</string>
     <string name="infoTitleAdmin">Info</string>
-    <string name="infoAdmin">This is the admin screen</string>
+    <string name="infoAdmin">This is the admin screen:\nThe Authors are: \n- Thomas Lawrence \n- Hamza Habiballah</string>
     <string name="databaseName">database_name</string>
     <string name="databaseError">database error</string>
     <string name="errorMessage">The array is null</string>

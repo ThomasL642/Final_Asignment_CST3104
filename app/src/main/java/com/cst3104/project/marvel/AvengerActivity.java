@@ -124,7 +124,6 @@ public class AvengerActivity extends AppCompatActivity {
 
         userName = getIntent().getStringExtra("username");
 
-
         // Initialize ViewModel
         viewModel = new ViewModelProvider(this).get(GameViewModel.class);
 
