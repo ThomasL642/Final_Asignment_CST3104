@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Projet final - Jeu Avengers</string>
+    <string name="random_image">Image aléatoire</string>
+    <string name="toolbar_title">Projet final - Jeu Avengers</string>
+    <string name="toolbar_subtitle"></string>
+    <string name="reset_game">Remise à zéro</string>
+    <string name="empty"></string>
+    <string name="game_scorebroad">Score du jeubroad</string>
+    <string name="infoTitleAdmin">Info</string>
+    <string name="infoAdmin">Voici l\'écran d\'administration:\nLes auteurs sont : \n- Thomas Lawrence \n- Hamza Habiballah</string>
+    <string name="databaseName">database_name</string>
+    <string name="databaseError">database error</string>
+    <string name="errorMessage">The array is null</string>
+    <string name="infoTitleGame">Info jeu</string>
+    <string name="infoGame">Comment jouer :\n- Devinez le nom du personnage représenté dans l\'image en sélectionnant une option dans la liste.\n- Réponse correcte : Le score devient vert et le jeu s\'arrête.\n- Mauvaise réponse : Le score devient rouge et augmente, alors essayez d\'obtenir le score le plus bas possible !\n- Utilisez l\'icône de réinitialisation pour redémarrer le jeu.\n- Appuyez sur l\'icône Web pour ouvrir la page Wikipédia du personnage pour plus d\'informations.</string>
+
+    <string name="enter_email">Saisir l\'adresse électronique</string>
+    <string name="hint_email">Adresse électronique</string>
+    <string name="enter_password">Saisir le mot de passe</string>
+    <string name="hint_password">Mot de passe</string>
+    <string name="login_button_text">Connexion</string>
+
+    <string name="toolbar_title_dashboard">Projet final - Jeu Avengers</string>
+    <string name="dashboard_title">Mon tableau de bord</string>
+    <string name="play_button">Jouer</string>
+    <string name="latest_game">Dernier jeu: %1$s - Score: %2$d</string>
+    <string name="lowest_game">Jeu le plus bas: %1$s - Score: %2$d</string>
+    <string name="highest_game">Jeu le plus élevé: %1$s - Score: %2$d</string>
+    <string name="no_data_available">No data available</string>
+    <string name="about_app_title">À propos de l\'application</string>
+    <string name="about_app_message">Cette application a été créée pour CST3104.\nAuteurs : %1$s et %2$s</string>
+    <string name="ok_button">OK</string>
+</resources>

@@ -28,14 +28,30 @@ import java.util.List;
 @Dao
 public interface ScoreDAO {
 
+    /**
+     * Retrieves the most recent UserInfo entry based on the timestamp.
+     *
+     * @return The latest UserInfo entry, ordered by timestamp in descending order.
+     */
     @Query("SELECT * FROM UserInfo ORDER BY timestamp DESC LIMIT 1")
     UserInfo getLatestUserInfo();
 
+    /**
+     * Retrieves the UserInfo entry with the lowest score.
+     *
+     * @return The UserInfo entry with the minimum score, ordered by score in ascending order.
+     */
     @Query("SELECT * FROM UserInfo ORDER BY score ASC LIMIT 1")
     UserInfo getLowestUserInfo();
 
+    /**
+     * Retrieves the UserInfo entry with the highest score.
+     *
+     * @return The UserInfo entry with the maximum score, ordered by score in descending order.
+     */
     @Query("SELECT * FROM UserInfo ORDER BY score DESC LIMIT 1")
     UserInfo getHighestUserInfo();
+
 
     /**
      * Inserts a new user record into the UserInfo table.
