@@ -24,16 +24,20 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.room.Room;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cst3104.project.R;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The DashboardActivity class provides an interface for users to view their game performance.
- * It displays the latest, lowest, and highest scores and allows users to navigate to the game screen.
+ * It displays the latest, lowest, and highest scores and a list of all recorded scores.
+ * It also allows users to start a new game through the Play button.
  */
 public class DashboardActivity extends AppCompatActivity {
 
@@ -53,19 +57,19 @@ public class DashboardActivity extends AppCompatActivity {
     private TextView highestGameTextView;
 
     /**
+     * RecyclerView for displaying the list of all game scores.
+     */
+    private RecyclerView recyclerView;
+
+    /**
+     * Adapter for populating the RecyclerView with game scores.
+     */
+    private ScoreAdapter scoreAdapter;
+
+    /**
      * Button to start a new game.
      */
     private Button playButton;
-
-    /**
-     * Data Access Object (DAO) for performing database operations.
-     */
-    private ScoreDAO mDAO;
-
-    /**
-     * Room database for storing and retrieving user scores.
-     */
-    private ScoreDatabase db;
 
     /**
      * Username passed from the LoginActivity.
@@ -73,8 +77,14 @@ public class DashboardActivity extends AppCompatActivity {
     private String username;
 
     /**
+     * ViewModel for managing and observing game statistics and scores.
+     */
+    private DashboardViewModel dashboardViewModel;
+
+    /**
      * Called when the activity is created.
-     * Sets up the toolbar, initializes the database and views, and fetches score data.
+     * Sets up the toolbar, initializes views, and sets up the ViewModel and RecyclerView.
+     * Observes LiveData to display the latest, lowest, highest, and all recorded scores.
      *
      * @param savedInstanceState State information passed from the system.
      */
@@ -91,78 +101,50 @@ public class DashboardActivity extends AppCompatActivity {
         latestGameTextView = findViewById(R.id.textViewLatestGame);
         lowestGameTextView = findViewById(R.id.textViewLowestGame);
         highestGameTextView = findViewById(R.id.textViewHighestGame);
+        recyclerView = findViewById(R.id.recyclerViewScores);
         playButton = findViewById(R.id.buttonPlay);
 
         // Get username from intent
         username = getIntent().getStringExtra("username");
 
-        // Initialize the database
-        db = Room.databaseBuilder(
-                getApplicationContext(),
-                ScoreDatabase.class,
-                getString(R.string.databaseName)
-        ).build();
-        mDAO = db.scoreDAO();
+        // Set up RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        scoreAdapter = new ScoreAdapter(new ArrayList<>()); // Initialize with an empty list
+        recyclerView.setAdapter(scoreAdapter);
 
-        // Fetch and display game statistics
-        loadGameStatistics();
+        // Initialize the ViewModel
+        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+
+        // Observe LiveData for latest, lowest, and highest scores
+        dashboardViewModel.getLatestGame().observe(this, latestGame -> {
+            latestGameTextView.setText(latestGame != null ? latestGame : getString(R.string.no_data_available));
+        });
+
+        dashboardViewModel.getLowestGame().observe(this, lowestGame -> {
+            lowestGameTextView.setText(lowestGame != null ? lowestGame : getString(R.string.no_data_available));
+        });
+
+        dashboardViewModel.getHighestGame().observe(this, highestGame -> {
+            highestGameTextView.setText(highestGame != null ? highestGame : getString(R.string.no_data_available));
+        });
+
+        // Observe the list of all scores for the RecyclerView
+        dashboardViewModel.getAllScores().observe(this, new Observer<List<UserInfo>>() {
+            @Override
+            public void onChanged(List<UserInfo> userInfoList) {
+                // Update the RecyclerView with the new list
+                scoreAdapter.setScores(userInfoList);
+            }
+        });
+
+        // Load game statistics into the ViewModel
+        dashboardViewModel.loadGameStatistics(getApplicationContext());
 
         // Set up Play button click listener
         playButton.setOnClickListener(v -> {
             Intent intent = new Intent(DashboardActivity.this, AvengerActivity.class);
             intent.putExtra("username", username); // Pass username to AvengerActivity
             startActivity(intent); // Start AvengerActivity
-        });
-    }
-
-    /**
-     * Fetches the latest, lowest, and highest game statistics from the database
-     * and updates the respective TextViews.
-     */
-    private void loadGameStatistics() {
-        Executor thread = Executors.newSingleThreadExecutor();
-        thread.execute(() -> {
-            // Fetch and update the latest game score
-            UserInfo latestUserInfo = mDAO.getLatestUserInfo();
-            runOnUiThread(() -> {
-                if (latestUserInfo != null) {
-                    latestGameTextView.setText(getString(
-                            R.string.latest_game,
-                            latestUserInfo.timestamp,
-                            latestUserInfo.score
-                    ));
-                } else {
-                    latestGameTextView.setText(R.string.no_data_available);
-                }
-            });
-
-            // Fetch and update the lowest game score
-            UserInfo lowestUserInfo = mDAO.getLowestUserInfo();
-            runOnUiThread(() -> {
-                if (lowestUserInfo != null) {
-                    lowestGameTextView.setText(getString(
-                            R.string.lowest_game,
-                            lowestUserInfo.timestamp,
-                            lowestUserInfo.score
-                    ));
-                } else {
-                    lowestGameTextView.setText(R.string.no_data_available);
-                }
-            });
-
-            // Fetch and update the highest game score
-            UserInfo highestUserInfo = mDAO.getHighestUserInfo();
-            runOnUiThread(() -> {
-                if (highestUserInfo != null) {
-                    highestGameTextView.setText(getString(
-                            R.string.highest_game,
-                            highestUserInfo.timestamp,
-                            highestUserInfo.score
-                    ));
-                } else {
-                    highestGameTextView.setText(R.string.no_data_available);
-                }
-            });
         });
     }
 
@@ -180,6 +162,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     /**
      * Handles menu item clicks.
+     * Displays dialogs with information or help based on the selected menu item.
      *
      * @param item The selected menu item.
      * @return True if the menu action is successfully handled.
@@ -193,7 +176,8 @@ public class DashboardActivity extends AppCompatActivity {
                     .setMessage("This page displays:\n\n"
                             + "- The latest game score with its timestamp.\n"
                             + "- The lowest score achieved so far.\n"
-                            + "- The highest score achieved so far.\n\n"
+                            + "- The highest score achieved so far.\n"
+                            + "- A list of all recorded scores.\n\n"
                             + "Use this dashboard to track your performance and start a new game!\n\n"
                             + "Authors: Hamza Habiballah and Thomas Lawrence.")
                     .setPositiveButton("OK", null)
@@ -205,6 +189,7 @@ public class DashboardActivity extends AppCompatActivity {
                     .setTitle("Dashboard Help")
                     .setMessage("How to use the Dashboard:\n\n"
                             + "- View your latest, lowest, and highest scores on this page.\n"
+                            + "- View all game scores in the list below.\n"
                             + "- Press the 'Play' button to start a new game.\n"
                             + "- Use the toolbar menu for more options.")
                     .setPositiveButton("OK", null)
@@ -212,14 +197,5 @@ public class DashboardActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Closes the database when the activity is destroyed.
-     */
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        db.close();
     }
 }
